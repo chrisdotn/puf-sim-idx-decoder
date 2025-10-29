@@ -6,15 +6,15 @@ import "sim-idx-generated/Generated.sol";
 
 contract Triggers is BaseTriggers {
 
-    address public constant factoryAddress = 0x3140167E09d3cfB67b151C25d54fa356f644712D;
-    address public constant factoryV4Address = 0xc301BaCE6E9409B1876347a3dC94EC24D18C1FE4;
+    address public constant FACTORY_ADDRESS = 0x3140167E09d3cfB67b151C25d54fa356f644712D;
+    address public constant FACTORY_V4_ADDRESS = 0xc301BaCE6E9409B1876347a3dC94EC24D18C1FE4;
 
-    uint256 public constant factoryDeploymentBlock = 8416059;
-    uint256 public constant factoryV4DeploymentBlock = 19020796;
+    uint64 public constant FACTORY_DEPLOYMENT_BLOCK = 8416059;
+    uint64 public constant FACTORY_V4_DEPLOYMENT_BLOCK = 19020796;
 
     function triggers() external virtual override {
         Listener listener = new Listener();
-        addTriggers(chainContract(Chains.WorldChain, factoryV4Address).withStartBlock(factoryV4DeploymentBlock), listener.allTriggers());
+        addTriggers(chainContract(Chains.WorldChain.withStartBlock(FACTORY_V4_DEPLOYMENT_BLOCK), FACTORY_V4_ADDRESS), listener.allTriggers());
     }
 }
 

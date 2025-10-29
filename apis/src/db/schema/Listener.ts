@@ -3,20 +3,58 @@ import { pgEnum } from "drizzle-orm/pg-core";
 import * as t from "drizzle-orm/pg-core";
 import { db, types, table } from "@duneanalytics/sim-idx";
 
-export const feeAmountEnabled = table("fee_amount_enabled", {
-  fee: db.uint24('fee'),
-  tickSpacing: db.int24('tick_spacing'),
+export const creatorFeePaid = table("creator_fee_paid", {
+  tokenContract: db.address('token_contract'),
+  creator: db.address('creator'),
+  amount: db.uint256('amount'),
 })
 
-export const ownerChanged = table("owner_changed", {
-  oldOwner: db.address('old_owner'),
+export const curvePhaseEnded = table("curve_phase_ended", {
+  tokenContract: db.address('token_contract'),
+  poolAddress: db.address('pool_address'),
+})
+
+export const initialized = table("initialized", {
+  version: db.uint64('version'),
+})
+
+export const ownershipTransferred = table("ownership_transferred", {
+  previousOwner: db.address('previous_owner'),
   newOwner: db.address('new_owner'),
 })
 
-export const poolCreated = table("pool_created", {
-  token0: db.address('token0'),
-  token1: db.address('token1'),
-  fee: db.uint24('fee'),
-  tickSpacing: db.int24('tick_spacing'),
-  pool: db.address('pool'),
+export const poolAddressSet = table("pool_address_set", {
+  tokenContract: db.address('token_contract'),
+  poolAddress: db.address('pool_address'),
+})
+
+export const tokenBought = table("token_bought", {
+  tokenContract: db.address('token_contract'),
+  buyer: db.address('buyer'),
+  paymentAmount: db.uint256('payment_amount'),
+  tokenAmount: db.uint256('token_amount'),
+  userHasProPlan: t.boolean('user_has_pro_plan'),
+})
+
+export const tokenCreated = table("token_created", {
+  tokenContract: db.address('token_contract'),
+  creator: db.address('creator'),
+  name: t.text('name'),
+  symbol: t.text('symbol'),
+  userHasProPlan: t.boolean('user_has_pro_plan'),
+  initialBuyAmountX: db.uint256('initial_buy_amount_x'),
+})
+
+export const tokenPriceChanged = table("token_price_changed", {
+  tokenContract: db.address('token_contract'),
+  newPrice: db.uint256('new_price'),
+  timestamp: db.uint256('timestamp'),
+})
+
+export const tokenSold = table("token_sold", {
+  tokenContract: db.address('token_contract'),
+  seller: db.address('seller'),
+  tokenAmount: db.uint256('token_amount'),
+  paymentAmount: db.uint256('payment_amount'),
+  userHasProPlan: t.boolean('user_has_pro_plan'),
 })
