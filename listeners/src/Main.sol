@@ -5,10 +5,14 @@ import "sim-idx-sol/Simidx.sol";
 import "sim-idx-generated/Generated.sol";
 
 contract Triggers is BaseTriggers {
+
+    address public constant factoryAddress = 0x3140167E09d3cfB67b151C25d54fa356f644712D;
+    address public constant factoryV4Address = 0xc301BaCE6E9409B1876347a3dC94EC24D18C1FE4;
+
     function triggers() external virtual override {
-        UniswapV3FactoryDecoder decoder = new UniswapV3FactoryDecoder();
-        addTriggers(chainContract(Chains.Ethereum, 0x1F98431c8aD98523631AE4a59f267346ea31F984), decoder.allTriggers());
+        Listener listener = new Listener();
+        addTriggers(chainContract(Chains.WorldChain, factoryV4Address), listener.allTriggers());
     }
 }
 
-contract UniswapV3FactoryDecoder is UniswapV3Factory$EmitAllEvents {}
+contract Listener is TokenRegistryV2$EmitAllEvents {}
